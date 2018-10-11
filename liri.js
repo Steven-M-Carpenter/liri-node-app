@@ -101,7 +101,7 @@ function processMovie(input) {
     var request = require("request");
     var apiKey = getKeys.omdb.key;
     var queryUrl = "http://www.omdbapi.com/?t=" + input + "&apikey=" + apiKey;
-    console.log(queryUrl);
+    // console.log(queryUrl);
 
     request(queryUrl, function (error, response, movie) {
         if (error) {
@@ -109,25 +109,59 @@ function processMovie(input) {
         }
         if (!error && response.statusCode === 200) {
             var movieTitle = JSON.parse(movie).Title;
-            var movieReleaseYear = JSON.parse(movie).Year;
-            var movieIMDBRating = JSON.parse(movie).Ratings[0].Value;
-            var movieTomatoesRating = JSON.parse(movie).Ratings[1].Value;
-            var movieProdCountry = JSON.parse(movie).Country;
-            var movieLanguage = JSON.parse(movie).Language;
-            var moviePlot = JSON.parse(movie).Plot;
-            var movieActors = JSON.parse(movie).Actors;
+            if (movieTitle) {
+                var movieReleaseYear = JSON.parse(movie).Year;
+                var movieIMDBRating = JSON.parse(movie).Ratings[0].Value;
+                var movieTomatoesRating = JSON.parse(movie).Ratings[1].Value;
+                var movieProdCountry = JSON.parse(movie).Country;
+                var movieLanguage = JSON.parse(movie).Language;
+                var moviePlot = JSON.parse(movie).Plot;
+                var movieActors = JSON.parse(movie).Actors;
 
-            console.log("\n");
-            console.log("================================================================================");
-            console.log(`Title:                   ${movieTitle}`);
-            console.log(`Year:                    ${movieReleaseYear}`);
-            console.log(`Country:                 ${movieProdCountry}`);
-            console.log(`Language:                ${movieLanguage}`);
-            console.log(`IMDB Rating:             ${movieIMDBRating}`);
-            console.log(`Rotten Tomatoes Rating:  ${movieTomatoesRating}`);
-            console.log(`Actors:                  ${movieActors}`);
-            console.log(`Plot:                    ${moviePlot}`);
-            console.log("================================================================================");
+                console.log("\n");
+                console.log("================================================================================");
+                console.log(`Title:                   ${movieTitle}`);
+                console.log(`Year:                    ${movieReleaseYear}`);
+                console.log(`Country:                 ${movieProdCountry}`);
+                console.log(`Language:                ${movieLanguage}`);
+                console.log(`IMDB Rating:             ${movieIMDBRating}`);
+                console.log(`Rotten Tomatoes Rating:  ${movieTomatoesRating}`);
+                console.log(`Actors:                  ${movieActors}`);
+                console.log(`Plot:                    ${moviePlot}`);
+                console.log("================================================================================");
+            }
+            else {
+                var queryUrl = "http://www.omdbapi.com/?i=tt0485947&apikey=" + apiKey;
+                // console.log(queryUrl);
+
+                request(queryUrl, function (error, response, movie) {
+                    if (error) {
+                        return console.log('Error occurred: ' + error);
+                    }
+                    if (!error && response.statusCode === 200) {
+                        var movieTitle = JSON.parse(movie).Title;
+                        var movieReleaseYear = JSON.parse(movie).Year;
+                        var movieIMDBRating = JSON.parse(movie).Ratings[0].Value;
+                        var movieTomatoesRating = JSON.parse(movie).Ratings[1].Value;
+                        var movieProdCountry = JSON.parse(movie).Country;
+                        var movieLanguage = JSON.parse(movie).Language;
+                        var moviePlot = JSON.parse(movie).Plot;
+                        var movieActors = JSON.parse(movie).Actors;
+
+                        console.log("\n");
+                        console.log("================================================================================");
+                        console.log(`Title:                   ${movieTitle}`);
+                        console.log(`Year:                    ${movieReleaseYear}`);
+                        console.log(`Country:                 ${movieProdCountry}`);
+                        console.log(`Language:                ${movieLanguage}`);
+                        console.log(`IMDB Rating:             ${movieIMDBRating}`);
+                        console.log(`Rotten Tomatoes Rating:  ${movieTomatoesRating}`);
+                        console.log(`Actors:                  ${movieActors}`);
+                        console.log(`Plot:                    ${moviePlot}`);
+                        console.log("================================================================================");
+                    }
+                });
+            }
         }
     });
 }
